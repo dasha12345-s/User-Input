@@ -8,12 +8,32 @@ export default function Login() {
   const [enteredValue, setEnteredValue] = useState({
     email: '',
     password: ''
-  })
+  });
+
+  const [didAdded, setDidAdded] = useState({
+    email: false,
+    password: false
+  });
+
+  const emailIsInvalid = didAdded.email && !enteredValue.email.includes('@');
 
   function handleSubmit(event){
     event.preventDefault();
 
     console.log(enteredValue)
+    setEnteredValue({
+      email: '',
+      password: ''
+    })
+  }
+
+
+
+  function handleInputBlure(identifier){
+    setDidAdded(prevEdit => ({
+      ...prevEdit,
+      [identifier]: true
+    }));
   }
 
   // function handleEmailChange(event){
@@ -25,6 +45,10 @@ export default function Login() {
       ...prevValues,
       [identifier]: value
     }));
+    setDidAdded(prevEdit => ({
+      ...prevEdit,
+      [identifier]: false
+    }))
   }
 
   return (
@@ -38,9 +62,11 @@ export default function Login() {
           id="email" 
           type="email" 
           name="email" 
+          onBlur={() =>handleInputBlure('email')}
           onChange={(event) => handleInputChange('email', event.target.value)}
           value={enteredValue.email} 
           />
+          <div className="control-error">{emailIsInvalid && <p>Email adress is invalid</p>}</div>
         </div>
 
         <div className="control no-margin">

@@ -12,7 +12,7 @@ export default function Login() {
     const enteredPassword = password.current.value;
 
     console.log(enteredEmail, enteredPassword)
-
+    email.current.value = ''; //use with care
   }
 
   return (
